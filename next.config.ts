@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // El proyecto vive en una subcarpeta: fijamos la raíz para que Next no tome el lockfile de arriba.
+  // Fijamos la raíz por si el proyecto queda dentro de otra carpeta con su propio lockfile.
   turbopack: { root: __dirname },
   outputFileTracingRoot: __dirname,
   images: {

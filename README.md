@@ -7,7 +7,6 @@ Next.js (App Router) · TypeScript · Tailwind CSS 4 · Framer Motion. Listo par
 ## Correr en local
 
 ```bash
-cd appiko-web
 npm install
 npm run dev        # http://localhost:3000
 npm run build      # build de producción (también chequea tipos)
@@ -60,10 +59,9 @@ Sin ninguna configurada, el formulario avisa que no está conectado y sugiere Wh
 
 ## Deploy en Vercel
 
-1. New Project → importar el repositorio.
-2. **Root Directory: `appiko-web`** (el sitio vive en esta subcarpeta).
-3. Variables: `NEXT_PUBLIC_SITE_URL` (ej. `https://appiko.tech`) + las del formulario.
-4. Deploy. Dominio: Settings → Domains.
+1. [vercel.com/new](https://vercel.com/new) → importar el repositorio `appiko-web` (Vercel detecta Next.js solo, no hay que tocar nada del build).
+2. Variables: `NEXT_PUBLIC_SITE_URL` (ej. `https://appiko.tech`) + las del formulario.
+3. Deploy. Cada `git push` a `main` publica solo; cada rama tiene su link de vista previa. Dominio propio: Settings → Domains.
 
 ## Idiomas
 
