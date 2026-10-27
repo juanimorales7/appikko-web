@@ -47,7 +47,7 @@ export function PieceBoard({ className }: { className?: string }) {
           >
             <motion.a
               href={`/proyectos/${p.slug}`}
-              className="tile relative flex h-full min-h-[15rem] flex-col p-[11%] sm:min-h-[17rem]"
+              className="tile relative flex h-full min-h-[15rem] flex-col pt-7 pr-[calc(3%+1rem)] pb-7 pl-[calc(7%+1rem)] sm:min-h-[17rem] sm:pt-8 sm:pb-8 sm:pl-[calc(7%+1.5rem)]"
               data-active={active === p.slug || isLeaving}
               data-match={match}
               aria-label={`${p.name}: ${p.type}, ${t.status[p.status]}. ${t.puzzle.open}`}
@@ -77,14 +77,14 @@ export function PieceBoard({ className }: { className?: string }) {
                   <span className="hidden sm:inline">{t.status[p.status]}</span>
                 </span>
               </span>
-              <span className="tile-ink relative mt-auto font-display text-lg leading-tight font-semibold sm:text-2xl">
+              <span className="tile-ink relative mt-4 font-display text-lg leading-tight font-semibold sm:text-2xl">
                 {p.name}
               </span>
               <span className="tile-ink relative mt-1 text-xs text-white/65 sm:text-sm">{p.type}</span>
               <span className="tile-ink relative mt-3 hidden text-sm leading-snug text-white/75 sm:line-clamp-2">
                 {p.short}
               </span>
-              <span className="relative mt-3 flex flex-wrap gap-1">
+              <span className="relative mt-auto flex flex-wrap gap-1 pt-4">
                 {p.services.slice(0, 3).map((s) => (
                   <span
                     key={s}
@@ -107,7 +107,7 @@ export function PieceBoard({ className }: { className?: string }) {
       <li className={cn("relative", ctaWide && "col-span-2")}>
         <a
           href="#contacto"
-          className="tile relative flex h-full min-h-[15rem] flex-col p-[11%] sm:min-h-[17rem]"
+          className="tile relative flex h-full min-h-[15rem] flex-col pt-7 pr-[calc(3%+1rem)] pb-7 pl-[calc(7%+1rem)] sm:min-h-[17rem] sm:pt-8 sm:pb-8 sm:pl-[calc(7%+1.5rem)]"
           data-cta="true"
           data-active={active === "__cta"}
           onMouseEnter={() => setActive("__cta")}

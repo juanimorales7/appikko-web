@@ -8,8 +8,8 @@ export function Process() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading id="proceso-titulo" kicker={t.process.kicker} title={t.process.title} lead={t.process.lead} />
         <PieceChain
-          className="mt-14 md:justify-start xl:flex-nowrap"
-          itemClassName="md:w-60"
+          className="mt-14"
+          cols={{ base: 1, sm: 2, lg: 5 }}
           numbered
           items={t.process.steps.map((s) => ({ key: s.title, title: s.title, text: s.text }))}
         />

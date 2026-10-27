@@ -10,8 +10,8 @@ export type Edges = { top: Edge; right: Edge; bottom: Edge; left: Edge };
 export const TAB = 7; // profundidad, en unidades de la caja
 
 // Cola de milano: angosta junto al borde, ancha en la punta.
-const near = [40, 60] as const;
-const far = [34, 66] as const;
+const near = [42, 58] as const;
+const far = [37, 63] as const;
 
 /**
  * `topSpan`: si la pieza ocupa N columnas, el lado de arriba lleva N huecos (uno por cada
@@ -56,4 +56,31 @@ export function gridEdges(i: number, n: number, cols: number): Edges {
     bottom: i + cols < n ? "tab" : "flat",
     left: col > 0 ? "notch" : "flat",
   };
+}
+
+export type GridCell = { span: number; edges: Edges };
+
+/**
+ * Grilla de piezas sin huecos: con `n` piezas en `cols` columnas, si la última fila queda
+ * incompleta, la última pieza se estira hasta el final y encastra con todas las de arriba.
+ * Lengüetas hacia la derecha y hacia abajo; huecos a la izquierda y arriba.
+ */
+export function puzzleGrid(n: number, cols: number): GridCell[] {
+  const c = Math.max(1, Math.min(cols, n));
+  const rows = Math.ceil(n / c);
+  const lastRowCount = n - (rows - 1) * c;
+  return Array.from({ length: n }, (_, i) => {
+    const row = Math.floor(i / c);
+    const col = i % c;
+    const span = i === n - 1 ? c - lastRowCount + 1 : 1;
+    return {
+      span,
+      edges: {
+        top: row > 0 ? "notch" : "flat",
+        left: col > 0 ? "notch" : "flat",
+        right: col + span < c ? "tab" : "flat",
+        bottom: row < rows - 1 ? "tab" : "flat",
+      },
+    };
+  });
 }

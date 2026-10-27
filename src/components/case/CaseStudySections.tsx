@@ -1,10 +1,8 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import type { CaseStudy } from "@data/case-study";
-import { cn } from "@/lib/cn";
-import { gridEdges } from "@/lib/tile";
-import { TileShape } from "../TileShape";
 import { ArchitectureDiagram } from "./ArchitectureDiagram";
+import { SolutionGrid } from "./SolutionGrid";
 
 type Heading = "h2" | "h3";
 
@@ -69,29 +67,9 @@ export function CaseIntro({ cs, slug, as }: { cs: CaseStudy; slug: string; as: H
 export function CaseSolution({ cs, slug, as }: { cs: CaseStudy; slug: string; as: Heading }) {
   const pieces = cs.solution?.pieces;
   if (!pieces?.length) return null;
-  const n = pieces.length;
-  const cols = Math.min(n, 3);
   return (
     <Block id={`solucion-${slug}`} kicker="La solución" title={cs.solution?.title ?? "La solución"} as={as}>
-      <ol className={cn("grid auto-rows-fr", cols === 3 ? "md:grid-cols-3" : cols === 2 ? "md:grid-cols-2" : "")}>
-        {pieces.map((p, i) => (
-          <li key={p.title} className="relative px-6 pt-6 pb-9 md:px-7 md:pb-7" style={{ zIndex: n - i }}>
-            <TileShape className="md:hidden" depthX={0} depthY={4} edges={gridEdges(i, n, 1)} />
-            <TileShape className="hidden md:block" depthX={6} depthY={4} edges={gridEdges(i, n, cols)} />
-            <p className="relative font-display text-xs tracking-[0.2em] text-mint">{String(i + 1).padStart(2, "0")}</p>
-            <p className="relative mt-2 font-display text-3xl font-semibold uppercase tracking-tight">{p.title}</p>
-            <p className="relative mt-1 font-display text-mint">{p.subtitle}</p>
-            <ul className="relative mt-5 space-y-2.5 text-sm leading-relaxed text-white/80">
-              {p.items.map((it) => (
-                <li key={it} className="flex gap-2.5">
-                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rotate-45 bg-mint" aria-hidden="true" />
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
+      <SolutionGrid pieces={pieces} />
     </Block>
   );
 }
