@@ -6,11 +6,14 @@ export function TileShape({
   depthX = TAB,
   depthY = TAB,
   className,
+  topSpan = 1,
 }: {
   edges: Edges;
   depthX?: number;
   depthY?: number;
   className?: string;
+  /** Columnas que ocupa la pieza (para poner un hueco arriba por cada vecina). */
+  topSpan?: number;
 }) {
   const px = depthX;
   const py = depthY;
@@ -22,7 +25,7 @@ export function TileShape({
       viewBox={`${-px} ${-py} ${100 + px * 2} ${100 + py * 2}`}
       preserveAspectRatio="none"
     >
-      <path d={tilePath(edges, depthX, depthY)} />
+      <path d={tilePath(edges, depthX, depthY, topSpan)} />
     </svg>
   );
 }

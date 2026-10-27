@@ -10,6 +10,7 @@ import { useSeparate } from "@/lib/useSeparate";
 import { usePuzzle } from "./PuzzleContext";
 import { TileShape } from "./TileShape";
 
+// Todas las piezas miden lo mismo (auto-rows-fr + h-full): si no, las lengüetas no coinciden con los huecos.
 const COLS = 2;
 
 /**
@@ -20,9 +21,15 @@ export function PieceBoard({ className }: { className?: string }) {
   const { service, active, setActive } = usePuzzle();
   const { leaving, onOpen } = useSeparate(260);
   const n = projects.length + 1;
+  // Si "Tu proyecto" queda sola en la última fila, ocupa todo el ancho y encastra con las de arriba.
+  const ctaWide = projects.length % COLS === 0;
+  const edgesOf = (i: number) => {
+    const e = gridEdges(i, n, COLS);
+    return ctaWide && i >= projects.length - COLS ? { ...e, bottom: "tab" as const } : e;
+  };
 
   return (
-    <ul className={cn("grid grid-cols-2", className)} aria-label={t.projects.kicker}>
+    <ul className={cn("grid auto-rows-fr grid-cols-2", className)} aria-label={t.projects.kicker}>
       {projects.map((p, i) => {
         const match = !!service && p.services.includes(service);
         const dimmed = !!service && !match;
@@ -40,7 +47,7 @@ export function PieceBoard({ className }: { className?: string }) {
           >
             <motion.a
               href={`/proyectos/${p.slug}`}
-              className="tile relative flex aspect-[4/5] flex-col p-[11%] sm:aspect-[5/4]"
+              className="tile relative flex h-full min-h-[15rem] flex-col p-[11%] sm:min-h-[17rem]"
               data-active={active === p.slug || isLeaving}
               data-match={match}
               aria-label={`${p.name}: ${p.type}, ${t.status[p.status]}. ${t.puzzle.open}`}
@@ -58,10 +65,17 @@ export function PieceBoard({ className }: { className?: string }) {
               }}
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
             >
-              <TileShape edges={gridEdges(i, n, COLS)} />
+              <TileShape edges={edgesOf(i)} />
               <span className="tile-ink relative flex items-center justify-between font-display text-[11px] uppercase tracking-[0.18em] text-mint">
                 <span>{String(i + 1).padStart(2, "0")}</span>
-                <span className="tile-ink text-white/60">{t.status[p.status]}</span>
+                <span className="tile-ink flex items-center gap-1.5 text-white/60" title={t.status[p.status]}>
+                  <span
+                    className={cn("h-1.5 w-1.5 rounded-full", p.status === "en-vivo" ? "bg-mint" : "bg-white/45")}
+                    aria-hidden="true"
+                  />
+                  {/* En mobile alcanza el punto: el estado completo va en el aria-label y en el detalle */}
+                  <span className="hidden sm:inline">{t.status[p.status]}</span>
+                </span>
               </span>
               <span className="tile-ink relative mt-auto font-display text-lg leading-tight font-semibold sm:text-2xl">
                 {p.name}
@@ -90,16 +104,23 @@ export function PieceBoard({ className }: { className?: string }) {
           </motion.li>
         );
       })}
-      <li className="relative">
+      <li className={cn("relative", ctaWide && "col-span-2")}>
         <a
           href="#contacto"
-          className="tile relative flex aspect-[4/5] flex-col p-[11%] sm:aspect-[5/4]"
+          className="tile relative flex h-full min-h-[15rem] flex-col p-[11%] sm:min-h-[17rem]"
           data-cta="true"
           data-active={active === "__cta"}
           onMouseEnter={() => setActive("__cta")}
           onMouseLeave={() => setActive(null)}
         >
-          <TileShape edges={gridEdges(projects.length, n, COLS)} />
+          {ctaWide ? (
+            <TileShape
+              edges={{ top: projects.length ? "notch" : "flat", right: "flat", bottom: "flat", left: "flat" }}
+              topSpan={COLS}
+            />
+          ) : (
+            <TileShape edges={edgesOf(projects.length)} />
+          )}
           <span className="tile-ink relative font-display text-2xl text-mint">+</span>
           <span className="tile-ink relative mt-auto font-display text-lg leading-tight font-semibold sm:text-2xl">
             {t.puzzle.cta}

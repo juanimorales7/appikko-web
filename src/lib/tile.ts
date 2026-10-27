@@ -13,12 +13,19 @@ export const TAB = 7; // profundidad, en unidades de la caja
 const near = [40, 60] as const;
 const far = [34, 66] as const;
 
-export function tilePath({ top, right, bottom, left }: Edges, depthX = TAB, depthY = TAB) {
+/**
+ * `topSpan`: si la pieza ocupa N columnas, el lado de arriba lleva N huecos (uno por cada
+ * pieza de encima), del mismo tamaño que los de una pieza de una columna.
+ */
+export function tilePath({ top, right, bottom, left }: Edges, depthX = TAB, depthY = TAB, topSpan = 1) {
   const d: string[] = ["M0 0"];
   // arriba (izq → der): un hueco entra hacia abajo (+y), una lengüeta sale hacia arriba (−y)
   if (top !== "flat") {
     const s = top === "tab" ? -depthY : depthY;
-    d.push(`L${near[0]} 0 L${far[0]} ${s} L${far[1]} ${s} L${near[1]} 0`);
+    for (let k = 0; k < topSpan; k++) {
+      const x = (v: number) => ((k * 100 + v) / topSpan).toFixed(2);
+      d.push(`L${x(near[0])} 0 L${x(far[0])} ${s} L${x(far[1])} ${s} L${x(near[1])} 0`);
+    }
   }
   d.push("L100 0");
   if (right !== "flat") {
