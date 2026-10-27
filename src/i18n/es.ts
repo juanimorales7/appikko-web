@@ -56,7 +56,7 @@ export const es = {
     summary: "En resumen",
     highlights: "Lo destacado",
     stack: "Stack",
-    gallery: "Capturas",
+    gallery: "Imágenes",
     year: "Año",
     type: "Tipo",
     status: "Estado",

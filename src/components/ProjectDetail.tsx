@@ -1,10 +1,12 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { filled, isTodo, projects, type Project } from "@data/projects";
 import { serviceById } from "@data/services";
 import { t } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import {
+  CaseBrand,
   CaseDecisions,
   CaseFeatures,
   CaseIntro,
@@ -84,6 +86,37 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
       {cs && <CaseSolution cs={cs} slug={project.slug} as={Sub} />}
       {cs && <CaseScreens cs={cs} slug={project.slug} as={Sub} />}
 
+      {project.images.length > 1 && (
+        <section className="mt-20" aria-labelledby={`galeria-${project.slug}`}>
+          <Sub id={`galeria-${project.slug}`} className="text-2xl font-semibold sm:text-3xl">
+            {t.project.gallery}
+          </Sub>
+          {/* Filas de a 2: cada columna es proporcional a su foto, así todas quedan del mismo alto sin recortar. */}
+          <div className="mt-6 space-y-4">
+            {chunk(project.images.slice(1), 2).map((row) => (
+              <div
+                key={row[0].src}
+                className="grid gap-4 sm:[grid-template-columns:var(--cols)]"
+                style={{ "--cols": row.map((img) => `${(img.width / img.height).toFixed(3)}fr`).join(" ") } as CSSProperties}
+              >
+                {row.map((img) => (
+                  <div key={img.src} className="overflow-hidden border border-white/15">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      width={img.width}
+                      height={img.height}
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className="h-auto w-full"
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="mt-20 grid gap-12 md:grid-cols-[1fr_16rem]">
         <section aria-labelledby={`sobre-${project.slug}`}>
           <Sub id={`sobre-${project.slug}`} className="text-2xl font-semibold">
@@ -141,6 +174,7 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
         <>
           <CaseFeatures cs={cs} slug={project.slug} as={Sub} />
           <CaseTech cs={cs} slug={project.slug} as={Sub} />
+          <CaseBrand cs={cs} slug={project.slug} as={Sub} />
           <CaseDecisions cs={cs} slug={project.slug} as={Sub} />
           <CaseSecurity cs={cs} slug={project.slug} as={Sub} />
           <CaseTimeline cs={cs} slug={project.slug} as={Sub} />
@@ -149,27 +183,6 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
         </>
       )}
 
-      {project.images.length > 1 && (
-        <section className="mt-16" aria-labelledby={`galeria-${project.slug}`}>
-          <Sub id={`galeria-${project.slug}`} className="text-2xl font-semibold">
-            {t.project.gallery}
-          </Sub>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {project.images.slice(1).map((img) => (
-              <div key={img.src} className="relative overflow-hidden border border-white/15">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                  className="h-auto w-full"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section className="mt-20 flex flex-col items-start gap-4 border border-mint/40 bg-mint/5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
         <div>
@@ -212,3 +225,6 @@ export function StatusPill({ status, className }: { status: Project["status"]; c
     </span>
   );
 }
+
+const chunk = <T,>(list: T[], size: number) =>
+  Array.from({ length: Math.ceil(list.length / size) }, (_, i) => list.slice(i * size, i * size + size));

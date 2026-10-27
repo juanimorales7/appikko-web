@@ -140,7 +140,13 @@ export function CaseTech({ cs, slug, as }: { cs: CaseStudy; slug: string; as: He
 export function CaseDecisions({ cs, slug, as }: { cs: CaseStudy; slug: string; as: Heading }) {
   if (!cs.decisions?.length) return null;
   return (
-    <Block id={`decisiones-${slug}`} kicker="Decisiones" title="Lo que le explicamos al cliente" lead={cs.decisionsLead} as={as}>
+    <Block
+      id={`decisiones-${slug}`}
+      kicker={cs.decisionsKicker ?? "Decisiones"}
+      title={cs.decisionsTitle ?? "Lo que le explicamos al cliente"}
+      lead={cs.decisionsLead}
+      as={as}
+    >
       <ul className="grid gap-px bg-white/10 md:grid-cols-2">
         {cs.decisions.map((d, i) => (
           <li key={d.title} className="bg-ink p-6">
@@ -223,6 +229,36 @@ export function CaseNext({ cs, slug, as }: { cs: CaseStudy; slug: string; as: He
           </li>
         ))}
       </ul>
+    </Block>
+  );
+}
+
+export function CaseBrand({ cs, slug, as }: { cs: CaseStudy; slug: string; as: Heading }) {
+  const b = cs.brand;
+  if (!b?.palette.length) return null;
+  return (
+    <Block id={`marca-${slug}`} kicker="Identidad visual" title="La marca, aplicada en todo" lead={b.style} as={as}>
+      <ul className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4 lg:grid-cols-7">
+        {b.palette.map((c) => (
+          <li key={c.hex} className="bg-ink p-3">
+            <span className="block aspect-[4/3] w-full border border-white/10" style={{ background: c.hex }} aria-hidden="true" />
+            <span className="mt-2 block text-sm text-white/90">{c.name}</span>
+            <span className="block font-mono text-xs text-dim uppercase">{c.hex}</span>
+          </li>
+        ))}
+      </ul>
+      {b.fonts && (
+        <dl className="mt-6 grid gap-px bg-white/10 sm:grid-cols-2">
+          {b.fonts.map((f) => (
+            <div key={f.family} className="bg-ink p-5">
+              <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-dim">{f.role}</dt>
+              <dd className="mt-2 text-3xl text-white" style={{ fontFamily: f.css ?? f.family }}>
+                {f.family}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
     </Block>
   );
 }

@@ -28,6 +28,15 @@ export type CaseStudy = {
   /** Decisiones explicadas al cliente. */
   decisions?: { title: string; text: string }[];
   decisionsLead?: string;
+  /** Títulos de esa sección, si no son "Decisiones / Lo que le explicamos al cliente". */
+  decisionsKicker?: string;
+  decisionsTitle?: string;
+  /** Identidad visual: paleta, tipografías y estilo. */
+  brand?: {
+    palette: { name: string; hex: string }[];
+    fonts?: { role: string; family: string; css?: string }[];
+    style?: string;
+  };
   security?: string[];
   /** Etapas del proyecto. */
   timeline?: { title: string; text: string }[];

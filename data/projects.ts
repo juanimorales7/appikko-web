@@ -1,5 +1,6 @@
 import type { CaseStudy } from "./case-study";
 import { cipanaCase } from "./casos/cipana-turismo";
+import { indaloCase } from "./casos/indalo";
 import type { ServiceId } from "./services";
 
 /**
@@ -113,20 +114,57 @@ export const projects: Project[] = [
   {
     slug: "indalo",
     name: "Indalo",
-    url: TODO,
+    url: "https://juanimorales7.github.io/indalo/",
     type: "Cliente",
-    sector: "Decoración del hogar",
-    year: TODO,
-    short: "Tienda online para una empresa que vende todo para la decoración del hogar.",
+    sector: "Cestería nórdica artesanal",
+    year: "2026",
+    short:
+      "Tienda online y panel de gestión para una marca de cestería nórdica hecha a mano, con pedidos por WhatsApp y costo cero de infraestructura.",
     long: [
-      "Indalo vende todo para decorar el hogar. Desarrollamos su tienda online para mostrar el catálogo y vender en línea.",
-      TODO,
+      "Diseñamos y desarrollamos de principio a fin la tienda online de Indalo, una marca de cestería nórdica artesanal: cestas, canastas, posavasos y platos de sitio tejidos a mano en cordón.",
+      "La tienda tiene catálogo en tiempo real, buscador y filtros, fichas con galería de fotos y un carrito que calcula el envío por código postal y arma el pedido para mandarlo por WhatsApp.",
+      "Detrás, un panel protegido con login permite a la dueña cargar productos con varias fotos, precios, stock y ofertas sin tocar código. Todo con identidad visual propia y un stack 100% gratuito.",
     ],
-    highlights: [TODO],
-    services: ["web", "ecommerce", "ux"],
-    stack: [TODO],
-    images: [],
-    status: "en-vivo", // TODO: confirmar estado
+    highlights: [
+      "Catálogo conectado en tiempo real al panel",
+      "Carrito con envío por código postal y pedido por WhatsApp",
+      "Panel autogestionable con fotos, stock y ofertas",
+      "Identidad visual propia y fotos de catálogo con fondo de estudio",
+      "USD 0 por mes de infraestructura",
+    ],
+    services: ["web", "ecommerce", "db", "apis", "ux", "marca", "infra"],
+    serviceNotes: {
+      web: "Tienda pública y panel de administración, responsive.",
+      ecommerce: "Catálogo, ofertas, carrito con envío por zona y checkout por WhatsApp.",
+      db: "Firebase Firestore en tiempo real, con reglas de escritura solo autenticada.",
+      apis: "Firebase Auth, Cloudinary para las fotos y pedidos por WhatsApp.",
+      ux: "Compra simple en el celular y un panel pensado para alguien sin conocimientos técnicos.",
+      marca: "Paleta, tipografías y fotos de catálogo con fondo de estudio hechas con IA.",
+      infra: "Publicación en GitHub Pages con costo cero.",
+    },
+    stack: ["HTML5", "CSS3", "JavaScript", "Tailwind CSS", "Firebase Firestore", "Firebase Auth", "Cloudinary", "GitHub Pages"],
+    images: [
+      {
+        src: "/proyectos/indalo/nosotros.webp",
+        alt: "Logo de Indalo hecho en cordón sobre un mantel, con posavasos, una canasta con galletitas, una cesta, un mate y un termo con la marca",
+        width: 1600,
+        height: 893,
+      },
+      {
+        src: "/proyectos/indalo/portada.webp",
+        alt: "Cestas de cordón tejidas a mano de Indalo, con la etiqueta de cuero de la marca",
+        width: 1600,
+        height: 893,
+      },
+      {
+        src: "/proyectos/indalo/inicio.webp",
+        alt: "Imagen de inicio de la tienda: cestas y bandejas de cordón sobre una consola de madera con eucalipto y lavanda",
+        width: 1000,
+        height: 1339,
+      },
+    ],
+    status: "en-vivo",
+    caseStudy: indaloCase,
   },
   {
     slug: "laburapp",
