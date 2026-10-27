@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #050505;
+  --color-ink-2: #0c0d0d;
+  --color-ink-3: #151716;
+  --color-line: #ffffff;
+  --color-mute: #a3a8a5;
+  --color-dim: #6b716e;
+  --color-mint: #3aff9d;
+  --color-mint-dark: #155e3c;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+    background: var(--color-ink);
+    color: var(--color-line);
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    overflow-x: clip;
+    font-family: var(--font-sans);
+    background: var(--color-ink);
+    min-height: 100dvh;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-mint);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 3px;
+  }
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Cuadrícula técnica de fondo */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ---------- Piezas del rompecabezas (SVG) ---------- */
+.piece-fill {
+  fill: var(--color-ink);
+  transition: fill 0.25s var(--ease-snap), fill-opacity 0.25s;
+}
+.piece-line {
+  fill: none;
+  stroke: var(--color-line);
+  stroke-linejoin: miter;
+  stroke-miterlimit: 10;
+  transition: stroke 0.25s var(--ease-snap);
+}
+.piece-num {
+  fill: rgb(255 255 255 / 0.45);
+  font-family: var(--font-display);
+  transition: fill 0.25s;
+  pointer-events: none;
+}
+.piece[data-active="true"] .piece-fill {
+  fill: var(--color-mint);
+}
+.piece[data-active="true"] .piece-line {
+  stroke: var(--color-mint);
+}
+.piece[data-active="true"] .piece-num {
+  fill: var(--color-ink);
+}
+.piece[data-match="true"] .piece-fill {
+  fill: var(--color-mint-dark);
+}
+.piece[data-match="true"] .piece-line {
+  stroke: var(--color-mint);
+}
+.piece[data-match="true"][data-active="true"] .piece-fill {
+  fill: var(--color-mint);
+}
+.piece:focus {
+  outline: none;
+}
+.piece:focus-visible .piece-line {
+  stroke: var(--color-mint);
+  stroke-width: 2.6;
+}
+.piece-cta .piece-line {
+  stroke-dasharray: 3 3;
+  stroke: rgb(255 255 255 / 0.7);
+}
+
+/* ---------- Piezas HTML (tablero y cadenas) ---------- */
+.tile-shape path {
+  fill: var(--color-ink-2);
+  stroke: rgb(255 255 255 / 0.85);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: miter;
+  transition: fill 0.25s var(--ease-snap), stroke 0.25s var(--ease-snap);
+}
+a.tile:hover .tile-shape path,
+.tile:focus-visible .tile-shape path,
+.tile[data-active="true"] .tile-shape path {
+  fill: var(--color-mint);
+  stroke: var(--color-mint);
+}
+.tile[data-match="true"] .tile-shape path {
+  stroke: var(--color-mint);
+  fill: var(--color-mint-dark);
+}
+.tile[data-cta="true"] .tile-shape path {
+  stroke-dasharray: 5 4;
+  fill: transparent;
+}
+.tile:focus-visible {
+  outline: none;
+}
+.tile-ink {
+  transition: color 0.25s var(--ease-snap);
+}
+a.tile:hover .tile-ink,
+.tile:focus-visible .tile-ink,
+.tile[data-active="true"] .tile-ink {
+  color: var(--color-ink);
+}
