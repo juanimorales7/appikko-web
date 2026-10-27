@@ -60,7 +60,7 @@ Sin ninguna configurada, el formulario avisa que no está conectado y sugiere Wh
 ## Deploy en Vercel
 
 1. [vercel.com/new](https://vercel.com/new) → importar el repositorio `appiko-web` (Vercel detecta Next.js solo, no hay que tocar nada del build).
-2. Variables: `NEXT_PUBLIC_SITE_URL` (ej. `https://appiko.tech`) + las del formulario.
+2. Variables (opcionales): `NEXT_PUBLIC_SITE_URL` cuando tengas dominio propio (sirve con o sin `https://`; si falta, se usa la dirección de Vercel) + las del formulario.
 3. Deploy. Cada `git push` a `main` publica solo; cada rama tiene su link de vista previa. Dominio propio: Settings → Domains.
 
 ## Idiomas
