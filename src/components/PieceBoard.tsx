@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { projects } from "@data/projects";
 import { serviceById } from "@data/services";
 import { t } from "@/i18n/config";
@@ -17,7 +17,6 @@ const COLS = 2;
  * se toca la pieza y se abre el proyecto.
  */
 export function PieceBoard({ className }: { className?: string }) {
-  const reduce = useReducedMotion();
   const { service, active, setActive } = usePuzzle();
   const { leaving, onOpen } = useSeparate(260);
   const n = projects.length + 1;
@@ -34,10 +33,10 @@ export function PieceBoard({ className }: { className?: string }) {
             key={p.slug}
             className="relative"
             style={{ zIndex: active === p.slug || isLeaving ? 2 : 1 }}
-            initial={reduce ? false : { opacity: 0, x: col ? 24 : -24, y: 12 }}
+            initial={{ opacity: 0, x: col ? 24 : -24, y: 12 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ type: "spring", stiffness: 160, damping: 20, delay: reduce ? 0 : (i % 4) * 0.08 }}
+            transition={{ type: "spring", stiffness: 160, damping: 20, delay: (i % 4) * 0.08 }}
           >
             <motion.a
               href={`/proyectos/${p.slug}`}

@@ -1,20 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { t } from "@/i18n/config";
 import { PuzzleA } from "../PuzzleA";
 
 export function Hero() {
-  const reduce = useReducedMotion();
-  const up = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 18 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
-        };
+  // Mismo estado inicial en servidor y navegador; MotionConfig (layout) quita el movimiento si el usuario lo pide.
+  const up = (delay: number) => ({
+    initial: { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
+  });
 
   const [first, ...rest] = t.hero.title.split(", ");
 

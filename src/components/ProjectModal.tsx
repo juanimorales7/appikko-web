@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { t } from "@/i18n/config";
@@ -11,7 +11,6 @@ import { t } from "@/i18n/config";
  */
 export function ProjectModal({ children, title }: { children: ReactNode; title: string }) {
   const router = useRouter();
-  const reduce = useReducedMotion();
   const panel = useRef<HTMLDivElement>(null);
   const opener = useRef<Element | null>(null);
 
@@ -53,7 +52,7 @@ export function ProjectModal({ children, title }: { children: ReactNode; title: 
     <div className="fixed inset-0 z-50">
       <motion.div
         className="absolute inset-0 bg-ink/80 backdrop-blur-sm"
-        initial={reduce ? false : { opacity: 0 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onClick={close}
         aria-hidden="true"
@@ -67,7 +66,7 @@ export function ProjectModal({ children, title }: { children: ReactNode; title: 
             aria-label={title}
             tabIndex={-1}
             className="pointer-events-auto relative w-full max-w-5xl border border-white/20 bg-ink px-5 pt-16 pb-10 shadow-[0_0_0_1px_rgba(58,255,157,0.08),0_40px_120px_-20px_rgba(58,255,157,0.18)] outline-none sm:px-10 sm:pt-16"
-            initial={reduce ? false : { opacity: 0, y: 40, rotate: -1.5, scale: 0.97 }}
+            initial={{ opacity: 0, y: 40, rotate: -1.5, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
           >

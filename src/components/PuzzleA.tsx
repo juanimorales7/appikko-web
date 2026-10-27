@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { projects, type Project } from "@data/projects";
@@ -61,7 +61,6 @@ type Props = {
 };
 
 export function PuzzleA({ className, assemble = "mount", caption = true, filterable = false }: Props) {
-  const reduce = useReducedMotion();
   const pathname = usePathname();
   const { service, active, setActive } = usePuzzle();
   const { leaving, onOpen } = useSeparate();
@@ -81,7 +80,7 @@ export function PuzzleA({ className, assemble = "mount", caption = true, filtera
     | undefined;
   const ctaActive = active === "__cta";
 
-  const animateIn = assemble && !reduce;
+  const animateIn = !!assemble;
   const enter = (p: Piece, i: number) => {
     const dist = 150 + (i % 3) * 30;
     const sideways = i % 2 ? 1 : -1;

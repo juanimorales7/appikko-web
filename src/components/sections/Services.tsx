@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { projects } from "@data/projects";
 import { services } from "@data/services";
@@ -12,7 +12,6 @@ import { TileShape } from "../TileShape";
 import { SectionHeading } from "./SectionHeading";
 
 export function Services() {
-  const reduce = useReducedMotion();
   const { showService } = usePuzzle();
 
   return (
@@ -27,10 +26,10 @@ export function Services() {
                 key={s.id}
                 className="relative flex flex-col px-7 pt-8 pb-7 sm:px-8"
                 style={{ zIndex: services.length - i }}
-                initial={reduce ? false : { opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: reduce ? 0 : (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Las piezas encastran según cuántas columnas hay en cada tamaño de pantalla */}
                 <TileShape className="sm:hidden" depthX={0} depthY={5} edges={gridEdges(i, services.length, 1)} />

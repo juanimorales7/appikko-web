@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import type { ServiceIcon as Icon } from "@data/services";
 import { cn } from "@/lib/cn";
@@ -30,7 +30,6 @@ export function PieceChain({
   className?: string;
   itemClassName?: string;
 }) {
-  const reduce = useReducedMotion();
   return (
     <ol className={cn("flex flex-col md:flex-row md:flex-wrap", className)}>
       {items.map((item, i) => {
@@ -68,10 +67,10 @@ export function PieceChain({
             key={item.key}
             className="relative"
             style={{ zIndex: items.length - i }}
-            initial={reduce ? false : { opacity: 0, x: -28, y: 0 }}
+            initial={{ opacity: 0, x: -28, y: 0 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
-            transition={{ type: "spring", stiffness: 140, damping: 18, delay: reduce ? 0 : i * 0.12 }}
+            transition={{ type: "spring", stiffness: 140, damping: 18, delay: i * 0.12 }}
           >
             {item.href ? (
               <Link href={item.href} className={box}>

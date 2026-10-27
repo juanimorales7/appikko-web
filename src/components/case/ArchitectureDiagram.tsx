@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 type Props = { inputs: string[]; hub: string; outputs: string[] };
 
@@ -11,7 +11,6 @@ const COL = { in: [0, 210], hub: [310, 550], out: [640, 900] } as const;
 
 /** Diagrama: quién usa el sistema → núcleo → servicios conectados. En mobile, en columna. */
 export function ArchitectureDiagram({ inputs, hub, outputs }: Props) {
-  const reduce = useReducedMotion();
   const H = Math.max(inputs.length, outputs.length) * ROW;
   const yFor = (i: number, n: number) => H / 2 + (i - (n - 1) / 2) * ROW;
   const hubY = H / 2;
@@ -21,15 +20,12 @@ export function ArchitectureDiagram({ inputs, hub, outputs }: Props) {
     return `M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
   };
 
-  const draw = (i: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { pathLength: 0, opacity: 0 },
-          whileInView: { pathLength: 1, opacity: 1 },
-          viewport: { once: true, amount: 0.4 },
-          transition: { duration: 0.9, delay: 0.1 + i * 0.08, ease: "easeOut" as const },
-        };
+  const draw = (i: number) => ({
+    initial: { pathLength: 0, opacity: 0 },
+    whileInView: { pathLength: 1, opacity: 1 },
+    viewport: { once: true, amount: 0.4 },
+    transition: { duration: 0.9, delay: 0.1 + i * 0.08, ease: "easeOut" as const },
+  });
 
   const box = (x0: number, x1: number, y: number, text: string, key: string, strong = false) => (
     <g key={key}>

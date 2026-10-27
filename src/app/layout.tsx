@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { site } from "@data/site";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { MotionProvider } from "@/components/MotionProvider";
 import { PuzzleProvider } from "@/components/PuzzleContext";
 import { defaultLocale, t } from "@/i18n/config";
 import { inter, spaceGrotesk } from "./fonts";
@@ -35,12 +36,14 @@ export default function RootLayout({ children, modal }: { children: ReactNode; m
   return (
     <html lang={defaultLocale} className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body className="antialiased">
-        <PuzzleProvider>
-          <Header />
-          <main id="contenido">{children}</main>
-          <Footer />
-          {modal}
-        </PuzzleProvider>
+        <MotionProvider>
+          <PuzzleProvider>
+            <Header />
+            <main id="contenido">{children}</main>
+            <Footer />
+            {modal}
+          </PuzzleProvider>
+        </MotionProvider>
       </body>
     </html>
   );
