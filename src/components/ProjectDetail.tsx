@@ -4,6 +4,18 @@ import { filled, isTodo, projects, type Project } from "@data/projects";
 import { serviceById } from "@data/services";
 import { t } from "@/i18n/config";
 import { cn } from "@/lib/cn";
+import {
+  CaseDecisions,
+  CaseFeatures,
+  CaseIntro,
+  CaseMetrics,
+  CaseNext,
+  CaseScreens,
+  CaseSecurity,
+  CaseSolution,
+  CaseTech,
+  CaseTimeline,
+} from "./case/CaseStudySections";
 import { PieceChain } from "./PieceChain";
 import { ProjectCover } from "./ProjectCover";
 import { Field, done } from "./Todo";
@@ -16,6 +28,7 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
   const prev = projects[(idx - 1 + projects.length) % projects.length];
   const next = projects[(idx + 1) % projects.length];
   const url = filled(project.url);
+  const cs = project.caseStudy;
 
   const pieces = project.services.map((id) => {
     const s = serviceById[id];
@@ -58,7 +71,9 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
 
       <ProjectCover project={project} className="mt-10" priority={headingLevel === 1} />
 
-      <section className="mt-14" aria-labelledby={`piezas-${project.slug}`}>
+      {cs && <CaseIntro cs={cs} slug={project.slug} as={Sub} />}
+
+      <section className={cs ? "mt-20" : "mt-14"} aria-labelledby={`piezas-${project.slug}`}>
         <Sub id={`piezas-${project.slug}`} className="text-2xl font-semibold sm:text-3xl">
           {t.project.pieces}
         </Sub>
@@ -66,10 +81,13 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
         <PieceChain items={pieces} className="mt-8" />
       </section>
 
-      <div className="mt-16 grid gap-12 md:grid-cols-[1fr_16rem]">
+      {cs && <CaseSolution cs={cs} slug={project.slug} as={Sub} />}
+      {cs && <CaseScreens cs={cs} slug={project.slug} as={Sub} />}
+
+      <div className="mt-20 grid gap-12 md:grid-cols-[1fr_16rem]">
         <section aria-labelledby={`sobre-${project.slug}`}>
           <Sub id={`sobre-${project.slug}`} className="text-2xl font-semibold">
-            {t.project.about}
+            {cs ? t.project.summary : t.project.about}
           </Sub>
           <div className="mt-4 space-y-4 leading-relaxed text-white/80">
             {done(project.long).map((p, i) => (
@@ -119,9 +137,21 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
         </aside>
       </div>
 
+      {cs && (
+        <>
+          <CaseFeatures cs={cs} slug={project.slug} as={Sub} />
+          <CaseTech cs={cs} slug={project.slug} as={Sub} />
+          <CaseDecisions cs={cs} slug={project.slug} as={Sub} />
+          <CaseSecurity cs={cs} slug={project.slug} as={Sub} />
+          <CaseTimeline cs={cs} slug={project.slug} as={Sub} />
+          <CaseMetrics cs={cs} slug={project.slug} as={Sub} />
+          <CaseNext cs={cs} slug={project.slug} as={Sub} />
+        </>
+      )}
+
       {project.images.length > 1 && (
-        <section className="mt-16" aria-labelledby={`capturas-${project.slug}`}>
-          <Sub id={`capturas-${project.slug}`} className="text-2xl font-semibold">
+        <section className="mt-16" aria-labelledby={`galeria-${project.slug}`}>
+          <Sub id={`galeria-${project.slug}`} className="text-2xl font-semibold">
             {t.project.gallery}
           </Sub>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -141,7 +171,7 @@ export function ProjectDetail({ project, headingLevel = 1 }: { project: Project;
         </section>
       )}
 
-      <section className="mt-16 flex flex-col items-start gap-4 border border-mint/40 bg-mint/5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <section className="mt-20 flex flex-col items-start gap-4 border border-mint/40 bg-mint/5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
         <div>
           <p className="font-display text-xl font-semibold">{t.project.ctaTitle}</p>
           <p className="mt-1 text-mute">{t.project.ctaText}</p>

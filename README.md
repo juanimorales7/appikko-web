@@ -24,6 +24,10 @@ En `npm run dev` los datos pendientes (`TODO: completar`) se ven **marcados en a
 
 El orden de la lista es el orden de las piezas. Con 4 proyectos se usan las 5 facetas del logo (la última es "Tu proyecto"); con más, las facetas se cortan con encastres automáticos, hasta 9 proyectos en la A (el tablero no tiene límite).
 
+### Caso de estudio (opcional)
+
+Para un proyecto con más detalle (como Cipana), creá `data/casos/<slug>.ts` con un objeto `CaseStudy` (tipos en `data/case-study.ts`) y enlazalo en el proyecto con `caseStudy: miCaso`. Todos los bloques son opcionales y se muestran solo si están: el cliente y el pedido, la solución en piezas, capturas de celular, funcionalidades, arquitectura con diagrama, decisiones, seguridad, etapas, números y próximas etapas. Ejemplo completo: `data/casos/cipana-turismo.ts`.
+
 Servicios: `data/services.ts`. Datos de contacto y redes: `data/site.ts`. Textos de la interfaz: `src/i18n/es.ts`.
 
 ## Cómo está hecho el rompecabezas

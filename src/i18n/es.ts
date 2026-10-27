@@ -53,6 +53,7 @@ export const es = {
     pieces: "Las piezas de este proyecto",
     piecesLead: "Cada servicio que aplicamos es una pieza. Juntas, arman el proyecto.",
     about: "El proyecto",
+    summary: "En resumen",
     highlights: "Lo destacado",
     stack: "Stack",
     gallery: "Capturas",

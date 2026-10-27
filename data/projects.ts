@@ -1,3 +1,5 @@
+import type { CaseStudy } from "./case-study";
+import { cipanaCase } from "./casos/cipana-turismo";
 import type { ServiceId } from "./services";
 
 /**
@@ -49,60 +51,64 @@ export type Project = {
   /** La primera es la portada. Vacío = portada geométrica automática. */
   images: ProjectImage[];
   status: ProjectStatus;
+  /** Caso de estudio completo (opcional). Ver data/case-study.ts y data/casos/. */
+  caseStudy?: CaseStudy;
 };
 
 export const projects: Project[] = [
   {
     slug: "cipana-turismo",
-    name: "Cipana Turismo",
+    name: "Cipana Turismo Aventura",
     url: "https://cipanaturismo.com",
     type: "Cliente",
     sector: "Turismo aventura · San Rafael, Mendoza",
     year: "2026",
     short:
-      "Sitio web con reservas online, pagos y panel de administración para una empresa de turismo aventura.",
+      "Sitio web, reservas online y panel de administración para una empresa de turismo aventura. Pensado para que un equipo no técnico maneje todo desde el celular.",
     long: [
-      "Cipana Turismo Aventura ofrece rafting, kayak, trekking, nieve y excursiones en San Rafael, Mendoza. Necesitaban un sitio que mostrara la experiencia y que, además, les permitiera vender y organizar las salidas sin depender de planillas.",
-      "Construimos el sitio completo: portada con video, explorador de actividades por temporada y dificultad, páginas por actividad con precios por tamaño de grupo y ofertas con cuenta regresiva. La reserva online muestra cupos en tiempo real y se confirma sola al pagar la seña con Mercado Pago, o queda como pedido por WhatsApp.",
-      "Detrás hay un panel pensado para un equipo no técnico que lo usa desde el celular: actividades, precios, cupos, fotos, guías, reservas y clientes, con permisos por rol. Todos los días se envían solos los recordatorios, el pedido de reseña y el aviso de fotos de la salida.",
+      "Cipana organiza rafting, kayak, trekking y salidas a la nieve en San Rafael, Mendoza, y coordinaba todo por WhatsApp. Diseñamos y desarrollamos un sitio con la identidad de la marca, reservas con calendario y cupos en tiempo real, cobro de seña con Mercado Pago y reservas por WhatsApp que quedan registradas antes de abrir el chat.",
+      "Cada reserva se guarda en la base de datos, aparece en Google Calendar y dispara emails automáticos desde la casilla de la empresa: confirmación, recordatorio el día anterior y pedido de reseña al terminar.",
+      "El equipo maneja todo desde un panel en el celular: actividades y paquetes, precios por grupo, ofertas con fecha, fotos y video de portada, guías, salidas y pasajeros. Construido con Next.js 16 sobre Cloudflare Workers, D1 y R2, con permisos por rol verificados en el servidor y datos sensibles cifrados.",
     ],
     highlights: [
-      "Reservas con cupos en tiempo real",
-      "Seña con Mercado Pago y confirmación automática",
-      "Panel administrable desde el celular, con roles",
-      "Recordatorios y pedidos de reseña automáticos",
-      "Datos sensibles cifrados (Ley 25.326)",
+      "Calendario con cupos en tiempo real y precios por grupo",
+      "Seña con Mercado Pago y reservas por WhatsApp que quedan registradas",
+      "Google Calendar y emails automáticos desde la casilla de la empresa",
+      "Ofertas con cuenta regresiva, galería y video de portada editables",
+      "Guías con su lista de pasajeros y fotos privadas de cada salida",
     ],
     services: ["web", "apis", "infra", "db", "ux", "marketing"],
     serviceNotes: {
-      web: "Sitio público, área de clientes \"Mis viajes\" y panel /admin.",
-      apis: "Mercado Pago, WhatsApp Cloud API, Google Calendar y Gmail.",
-      infra: "Cloudflare Workers con dominio propio, correo y tareas programadas.",
-      db: "Cloudflare D1 + Drizzle; fotos en R2; datos de salud cifrados.",
-      ux: "Flujos de reserva y panel pensados para el celular.",
-      marketing: "Google Analytics 4, píxel de Meta, SEO y reseñas de Google.",
+      web: "Sitio, área de clientes “Mis viajes” y panel: 32 pantallas.",
+      apis: "Google Calendar, Gmail API y Mercado Pago Checkout Pro con webhook firmado.",
+      infra: "Cloudflare Workers + OpenNext, dominio propio y tareas diarias. USD 5 por mes.",
+      db: "Cloudflare D1 + Drizzle (20 tablas), fotos y videos en R2, datos de salud cifrados.",
+      ux: "Diseñado primero para el celular, con un panel que guía paso a paso.",
+      marketing: "Google Analytics 4, Search Console, sitemap y datos estructurados.",
     },
     stack: [
-      "Next.js",
-      "React",
+      "Next.js 16",
+      "React 19",
       "TypeScript",
       "Cloudflare Workers",
       "Cloudflare D1",
+      "Cloudflare R2",
       "Drizzle ORM",
       "Better Auth",
-      "Mercado Pago",
-      "WhatsApp Cloud API",
+      "Google Workspace",
       "Google Calendar API",
+      "Mercado Pago",
     ],
     images: [
       {
         src: "/proyectos/cipana-turismo/portada.webp",
-        alt: "Portada del sitio de Cipana Turismo: grupo haciendo rafting en el río Atuel",
+        alt: "Ilustración de la portada de Cipana: montañas, el río Atuel y botes de rafting al atardecer",
         width: 1600,
         height: 900,
       },
     ],
     status: "en-vivo",
+    caseStudy: cipanaCase,
   },
   {
     slug: "indalo",
